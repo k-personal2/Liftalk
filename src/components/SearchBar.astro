@@ -1,0 +1,26 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  value?: string;
+  small?: boolean;
+}
+const { value = "", small = false } = Astro.props;
+---
+<form class:list={["searchbar", { "searchbar--sm": small }]} action="/search/" method="get" role="search">
+  <input
+    id="q"
+    name="q"
+    type="search"
+    value={value}
+    placeholder={small ? "検索" : "日本語またはEnglishで入力"}
+    autocomplete="off"
+    enterkeyhint="search"
+    aria-label="フレーズを検索"
+  />
+  {small ? (
+    <a class="searchbar__clear" href="/" aria-label="クリア"><Icon id="i-close" /></a>
+  ) : (
+    <button class="searchbar__go" type="submit" aria-label="検索"><Icon id="i-search" /></button>
+  )}
+</form>

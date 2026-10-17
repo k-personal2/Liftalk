@@ -1,0 +1,5 @@
+/* Zen Kaku Gothic New — loaded without blocking render (see Layout.astro).
+   unicode-range splits it into ~120 chunks per weight; browsers fetch only the chunks a page uses. */
+@import "@fontsource/zen-kaku-gothic-new/500.css";
+@import "@fontsource/zen-kaku-gothic-new/700.css";
+@import "@fontsource/zen-kaku-gothic-new/900.css";

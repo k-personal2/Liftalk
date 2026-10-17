@@ -1,0 +1,67 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Icon from "../components/Icon.astro";
+import { STUDY_POOL } from "../lib/phrases";
+
+const first = STUDY_POOL[0];
+---
+<Layout
+  title="Study — リフトの上で1枚ずつ"
+  description="日本語を見て英語を思い出すフラッシュカード。リフトの上で1〜2枚めくるだけ。"
+  active="study"
+  width="card"
+>
+  <div class="study-head">
+    <h1 class="h2" lang="en">Study</h1>
+    <span class="study-progress" id="progress">1 / {STUDY_POOL.length}</span>
+  </div>
+  <p class="sub">リフトの上で1〜2枚めくるだけ。</p>
+  <div class="flash">
+    <p class="flash__ja" id="flashJa">{first.ja}</p>
+    <div class="flash__answer" id="answer" hidden>
+      <div class="flash__rule"></div>
+      <p class="flash__en" id="flashEn" lang="en">{first.en}</p>
+      <button class="btn-listen" type="button" id="listen" data-speak={first.en}><Icon id="i-speak" /> Listen</button>
+    </div>
+  </div>
+  <div class="study-foot">
+    <button class="btn-primary btn-primary--block" type="button" id="reveal">Show answer</button>
+    <button class="btn-primary btn-primary--dark btn-primary--block" type="button" id="next" hidden>Next →</button>
+  </div>
+</Layout>
+
+<script>
+  import { STUDY_POOL } from "../lib/phrases";
+  import { getStudyIdx, setStudyIdx } from "../lib/favs";
+
+  const $ = (id: string) => document.getElementById(id)!;
+  const answer = $("answer"), reveal = $("reveal"), next = $("next");
+  let idx = getStudyIdx();
+
+  function show() {
+    const i = idx % STUDY_POOL.length;
+    const p = STUDY_POOL[i];
+    $("progress").textContent = `${i + 1} / ${STUDY_POOL.length}`;
+    $("flashJa").textContent = p.ja;
+    $("flashEn").textContent = p.en;
+    $("listen").dataset.speak = p.en;
+    answer.hidden = true;
+    reveal.hidden = false;
+    next.hidden = true;
+  }
+
+  reveal.addEventListener("click", () => {
+    answer.hidden = false;
+    reveal.hidden = true;
+    next.hidden = false;
+    next.focus();
+  });
+  next.addEventListener("click", () => {
+    idx += 1;
+    setStudyIdx(idx);
+    show();
+    reveal.focus();
+  });
+
+  show();
+</script>

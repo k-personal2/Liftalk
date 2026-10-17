@@ -1,0 +1,23 @@
+---
+import Icon from "./Icon.astro";
+
+export type TabKey = "home" | "study" | "saved";
+interface Props {
+  active: TabKey;
+  variant: "rail" | "tabbar";
+}
+const { active, variant } = Astro.props;
+
+const TABS: { key: TabKey; label: string; icon: string; href: string }[] = [
+  { key: "home", label: "Search", icon: "i-search", href: "/" },
+  { key: "study", label: "Study", icon: "i-study", href: "/study/" },
+  { key: "saved", label: "Saved", icon: "i-star", href: "/saved/" },
+];
+const cls = variant === "rail" ? "navbtn" : "tabbtn";
+---
+{TABS.map((t) => (
+  <a class={cls} href={t.href} aria-current={t.key === active ? "page" : undefined}>
+    <Icon id={t.icon} />
+    <span>{t.label}</span>
+  </a>
+))}

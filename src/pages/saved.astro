@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PhraseCard from "../components/PhraseCard.astro";
+import { PHRASES } from "../data/phrases";
+---
+<Layout title="Saved" active="saved" noindex>
+  <h1 class="h2" lang="en">Saved</h1>
+  <p class="sub">よく使うフレーズ</p>
+  <div class="grid" id="saved">
+    {PHRASES.map((p) => <PhraseCard phrase={p} as="h2" hidden />)}
+  </div>
+  <div class="empty" id="empty" hidden>
+    <p class="empty__glyph" aria-hidden="true">☆</p>
+    <p class="empty__title">Nothing saved yet.</p>
+    <p class="empty__body">カードの☆でいつでも保存できます。</p>
+  </div>
+</Layout>
+
+<script>
+  import { FAVS_EVENT, getFavs } from "../lib/favs";
+
+  const grid = document.getElementById("saved")!;
+  const empty = document.getElementById("empty")!;
+  const byId = new Map(
+    [...grid.querySelectorAll<HTMLElement>(".card")].map((el) => [Number(el.dataset.id), el]),
+  );
+
+  function show() {
+    const favs = getFavs().filter((id) => byId.has(id));
+    byId.forEach((el) => (el.hidden = true));
+    // Keep the order in which phrases were saved.
+    favs.forEach((id) => {
+      const el = byId.get(id)!;
+      el.hidden = false;
+      grid.append(el);
+    });
+    empty.hidden = favs.length > 0;
+  }
+
+  show();
+  document.addEventListener(FAVS_EVENT, show);
+</script>

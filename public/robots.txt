@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://liftalk.dev/sitemap-index.xml

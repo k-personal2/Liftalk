@@ -1,0 +1,85 @@
+---
+import { Font } from "astro:assets";
+import IconSprite from "../components/IconSprite.astro";
+import Nav, { type TabKey } from "../components/Nav.astro";
+import "../styles/global.css";
+import jaFontsHref from "../styles/fonts-ja.css?url";
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: TabKey;
+  noindex?: boolean;
+  width?: "narrow" | "card";
+  /** JSON-LD objects describing this page; must match what is visible on it. */
+  jsonLd?: Record<string, unknown>[];
+}
+
+const HOME_TITLE = "Liftalk（リフトーク）｜スキー・スノボで使える英会話フレーズ";
+const DEFAULT_DESC =
+  "スキー・スノーボード中、海外の友達に言いたいのに出てこない一言を英語で。リフトでの会話、滑りの教え方、パーク、雪と天気など6つのシーン別に検索でき、音声で発音も確認できる英会話フレーズ集。";
+const { title, description = DEFAULT_DESC, active = "home", noindex = false, width, jsonLd = [] } = Astro.props;
+const fullTitle = title ? `${title} | Liftalk` : HOME_TITLE;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL("/og.png", Astro.site);
+---
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{fullTitle}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  {noindex && <meta name="robots" content="noindex" />}
+  <meta name="theme-color" content="#0E0E0E" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <meta property="og:type" content={Astro.url.pathname === "/" ? "website" : "article"} />
+  <meta property="og:site_name" content="Liftalk" />
+  <meta property="og:title" content={fullTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Liftalk — Snow English。スキー・スノボで使える英会話フレーズ" />
+  <meta name="twitter:card" content="summary_large_image" />
+  {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+  <Font cssVariable="--font-archivo" preload />
+  <!-- Japanese font CSS is large and font-display:swap anyway, so don't let it block first paint. -->
+  <link rel="preload" as="style" href={jaFontsHref} onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href={jaFontsHref} /></noscript>
+</head>
+<body>
+  <IconSprite />
+  <div class="app">
+    <aside class="rail">
+      <a class="brand" href="/">
+        <span class="brand__dot"></span>
+        <span class="brand__text">
+          <span class="brand__name">Liftalk</span>
+          <span class="brand__sub">Snow English</span>
+        </span>
+      </a>
+      <nav class="rail__nav" aria-label="メイン"><Nav variant="rail" active={active} /></nav>
+      <div class="rail__note">
+        <p class="rail__note-title">On the lift?</p>
+        <p class="rail__note-body">スマホで開くと片手操作用のレイアウトになります。</p>
+      </div>
+    </aside>
+
+    <main class="main" id="main">
+      <div class:list={["screen wrap", width && `wrap--${width}`]}><slot /></div>
+    </main>
+
+    <nav class="tabbar" aria-label="メイン"><Nav variant="tabbar" active={active} /></nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script>
+    import "../scripts/app";
+  </script>
+</body>
+</html>

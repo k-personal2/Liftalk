@@ -1,0 +1,45 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SearchBar from "../components/SearchBar.astro";
+import PhraseCard from "../components/PhraseCard.astro";
+import CategoryTile from "../components/CategoryTile.astro";
+import { CATEGORIES, QUICK_CHIPS } from "../data/phrases";
+import { FEATURED, searchUrl } from "../lib/phrases";
+import { websiteJsonLd } from "../lib/seo";
+---
+<Layout jsonLd={[websiteJsonLd]}>
+  <div class="eyebrow">
+    <span class="eyebrow__dot"></span>
+    <span class="eyebrow__label"><span class="eyebrow__name">Liftalk</span><span class="eyebrow__sub">Snow English</span></span>
+  </div>
+  <h1 class="h1">
+    <span lang="en">What do you want to say?</span>
+    <span class="h1__ja">スキー・スノボで使える英会話フレーズ集</span>
+  </h1>
+  <p class="lede">
+    海外の友達とリフトに乗ったとき、<br />言いたいのに出てこない一言、あるよね。<br />
+    <strong>だから、リフトークで知っておこう。</strong>
+  </p>
+  <SearchBar />
+  <ul class="chips" aria-label="検索の例">
+    {QUICK_CHIPS.map((c) => <li><a class="chip" href={searchUrl(c)}>{c}</a></li>)}
+  </ul>
+
+  <section aria-labelledby="today">
+    <div class="section-head">
+      <h2 class="h2" id="today">Featured phrases</h2>
+      <span class="section-head__note">ピックアップ6フレーズ</span>
+    </div>
+    <div class="grid">
+      {FEATURED.map((p) => <PhraseCard phrase={p} />)}
+    </div>
+  </section>
+
+  <section class="explore" aria-labelledby="explore">
+    <h2 class="h2" id="explore">Explore</h2>
+    <p class="sub">シーンから探す</p>
+    <div class="grid grid--cat">
+      {CATEGORIES.map((c) => <CategoryTile category={c} />)}
+    </div>
+  </section>
+</Layout>

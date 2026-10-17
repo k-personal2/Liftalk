@@ -1,0 +1,70 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BackButton from "../components/BackButton.astro";
+import SearchBar from "../components/SearchBar.astro";
+import PhraseCard from "../components/PhraseCard.astro";
+import { PHRASES } from "../data/phrases";
+---
+<Layout title="検索" noindex>
+  <div class="topbar">
+    <BackButton />
+    <SearchBar small />
+  </div>
+  <div class="result-head" aria-live="polite">
+    <h1 class="result-head__q" id="resultQ">フレーズ検索</h1>
+    <span class="result-head__n" id="resultN"></span>
+  </div>
+  <!-- Every phrase is pre-rendered; the script below only toggles `hidden`. -->
+  <div class="grid" id="results">
+    {PHRASES.map((p) => <PhraseCard phrase={p} action="speak" as="h2" hidden />)}
+  </div>
+  <div class="empty" id="empty" hidden>
+    <p class="empty__title">No phrase yet.</p>
+    <p class="empty__body">別の言い方で試してみて。<br />例：「ボックス」「powder」「膝」</p>
+  </div>
+</Layout>
+
+<script>
+  import { searchPhrases, searchUrl } from "../lib/phrases";
+
+  const input = document.querySelector<HTMLInputElement>("#q")!;
+  const form = input.form!;
+  const qEl = document.getElementById("resultQ")!;
+  const nEl = document.getElementById("resultN")!;
+  const empty = document.getElementById("empty")!;
+  const cards = document.querySelectorAll<HTMLElement>("#results .card");
+
+  function show(q: string) {
+    const ids = new Set(searchPhrases(q).map((p) => p.id));
+    cards.forEach((el) => (el.hidden = !ids.has(Number(el.dataset.id))));
+    qEl.textContent = `「${q}」`;
+    nEl.textContent = `${ids.size} phrases`;
+    empty.hidden = ids.size > 0;
+    document.title = `「${q}」の検索結果 | Liftalk`;
+  }
+
+  const initial = new URLSearchParams(location.search).get("q")?.trim() ?? "";
+  if (!initial) location.replace("/");
+  input.value = initial;
+  show(initial);
+
+  // Live filtering as you type, without reloading the page.
+  let timer: number | undefined;
+  input.addEventListener("input", () => {
+    clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      const q = input.value.trim();
+      if (!q) return;
+      history.replaceState(null, "", searchUrl(q));
+      show(q);
+    }, 180);
+  });
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const q = input.value.trim();
+    if (!q) return location.assign("/");
+    history.replaceState(null, "", searchUrl(q));
+    show(q);
+    input.blur();
+  });
+</script>

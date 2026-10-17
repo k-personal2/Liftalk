@@ -1,0 +1,54 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import BackButton from "../../components/BackButton.astro";
+import Icon from "../../components/Icon.astro";
+import Swatch from "../../components/Swatch.astro";
+import { PHRASES, type Phrase } from "../../data/phrases";
+import { categoryUrl, getCategory, phrasesIn, phraseUrl } from "../../lib/phrases";
+import { breadcrumbs } from "../../lib/seo";
+
+export const getStaticPaths = (() =>
+  PHRASES.map((p) => ({ params: { id: String(p.id) }, props: { phrase: p } }))) satisfies GetStaticPaths;
+
+const { phrase: p } = Astro.props as { phrase: Phrase };
+const c = getCategory(p.cat);
+const related = phrasesIn(p.cat).filter((x) => x.id !== p.id).slice(0, 3);
+---
+<Layout
+  title={`「${p.ja}」は英語で “${p.en}”`}
+  description={`「${p.ja}」を英語で言うと “${p.en}”。${p.note}スノーボード・スキーで使える英会話フレーズ。`}
+  width="narrow"
+  jsonLd={[breadcrumbs([{ name: c.ja, path: categoryUrl(c) }, { name: p.ja, path: phraseUrl(p) }])]}
+>
+  <BackButton />
+  <div class="pill-row">
+    <a class="pill" href={categoryUrl(c)} lang="en"><Swatch color={c.color} />{c.name}</a>
+    <span class="pill pill--plain" lang="en">{p.level}</span>
+  </div>
+  <h1 class="detail__en" lang="en">{p.en}</h1>
+  <p class="detail__ja">{p.ja}</p>
+  <div class="actions">
+    <button class="btn-primary" type="button" data-speak={p.en}><Icon id="i-speak" /> Listen</button>
+    <button class="btn-fav" type="button" data-fav={p.id} aria-pressed="false" aria-label={`Save: ${p.en}`}>☆</button>
+  </div>
+  <section class="note" aria-labelledby="when">
+    <h2 class="note__label" id="when">When to use</h2>
+    <p class="note__body">{p.note}</p>
+  </section>
+  {related.length > 0 && (
+    <section aria-labelledby="related">
+      <h2 class="h3" id="related">Also useful</h2>
+      <ul class="list">
+        {related.map((r) => (
+          <li>
+            <a class="row" href={phraseUrl(r)}>
+              <span class="row__text"><span class="row__en" lang="en">{r.en}</span><span class="row__ja">{r.ja}</span></span>
+              <Icon id="i-chevron" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Layout>

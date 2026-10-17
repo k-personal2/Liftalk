@@ -1,0 +1,39 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import BackButton from "../../components/BackButton.astro";
+import Icon from "../../components/Icon.astro";
+import { CATEGORIES, type Category } from "../../data/phrases";
+import { categoryUrl, phrasesIn, phraseUrl } from "../../lib/phrases";
+import { breadcrumbs } from "../../lib/seo";
+
+export const getStaticPaths = (() =>
+  CATEGORIES.map((c) => ({ params: { id: c.id }, props: { category: c } }))) satisfies GetStaticPaths;
+
+const { category: c } = Astro.props as { category: Category };
+const list = phrasesIn(c.id);
+---
+<Layout
+  title={`${c.name}（${c.ja}）の英語フレーズ`}
+  description={`スキー・スノボの「${c.ja}」シーンで使える英語フレーズ${list.length}選。${list.slice(0, 3).map((p) => p.en).join(" / ")} など。`}
+  jsonLd={[breadcrumbs([{ name: c.ja, path: categoryUrl(c) }])]}
+>
+  <BackButton />
+  <header class="banner" style={`background:${c.color};color:${c.ink === "dark" ? "#0E0E0E" : "#FFFFFF"}`}>
+    <h1 class="banner__title">
+      <span class="banner__name" lang="en">{c.name}</span>
+      <span class="banner__ja">{c.ja}</span>
+    </h1>
+  </header>
+  <ul class="list">
+    {list.map((p) => (
+      <li class="row row--lg">
+        <span class="row__text">
+          <a class="row__link row__en" href={phraseUrl(p)} lang="en">{p.en}</a>
+          <span class="row__ja">{p.ja}</span>
+        </span>
+        <button class="iconbtn iconbtn--lg" type="button" data-speak={p.en} aria-label={`Listen: ${p.en}`}><Icon id="i-speak" /></button>
+      </li>
+    ))}
+  </ul>
+</Layout>

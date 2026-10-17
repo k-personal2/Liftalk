@@ -1,0 +1,31 @@
+---
+import Icon from "./Icon.astro";
+import Swatch from "./Swatch.astro";
+import type { Phrase } from "../data/phrases";
+import { getCategory, phraseUrl } from "../lib/phrases";
+
+interface Props {
+  phrase: Phrase;
+  action?: "fav" | "speak";
+  /** Heading level of the phrase title, so each page keeps a valid outline. */
+  as?: "h2" | "h3";
+  hidden?: boolean;
+}
+const { phrase: p, action = "fav", as: Heading = "h3", hidden } = Astro.props;
+const c = getCategory(p.cat);
+---
+<article class="card" data-id={p.id} hidden={hidden}>
+  <div class="card__top">
+    <Heading class="card__en" lang="en"><a class="card__link" href={phraseUrl(p)}>{p.en}</a></Heading>
+    {action === "speak" ? (
+      <button class="iconbtn" type="button" data-speak={p.en} aria-label={`Listen: ${p.en}`}><Icon id="i-speak" /></button>
+    ) : (
+      <button class="favbtn" type="button" data-fav={p.id} aria-pressed="false" aria-label={`Save: ${p.en}`}>☆</button>
+    )}
+  </div>
+  <p class="card__ja">{p.ja}</p>
+  <div class="meta">
+    <span class="meta__cat"><Swatch color={c.color} />{c.name}</span>
+    <span class="meta__level">{p.level}</span>
+  </div>
+</article>

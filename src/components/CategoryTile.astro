@@ -1,0 +1,17 @@
+---
+import Icon from "./Icon.astro";
+import type { Category } from "../data/phrases";
+import { categoryUrl, phrasesIn } from "../lib/phrases";
+
+interface Props {
+  category: Category;
+}
+const { category: c } = Astro.props;
+---
+<a class="cattile" href={categoryUrl(c)}>
+  <span class="cattile__icon" data-ink={c.ink} style={`background:${c.color}`}><Icon id={c.icon} /></span>
+  <span class="cattile__text">
+    <span class="cattile__name" lang="en">{c.name}</span>
+    <span class="cattile__sub">{c.ja} · {phrasesIn(c.id).length} phrases</span>
+  </span>
+</a>
