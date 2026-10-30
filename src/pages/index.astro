@@ -4,6 +4,8 @@ import SearchBar from "../components/SearchBar.astro";
 import PhraseCard from "../components/PhraseCard.astro";
 import CategoryTile from "../components/CategoryTile.astro";
 import { CATEGORIES, QUICK_CHIPS } from "../data/phrases";
+import { GLOSSARY } from "../data/glossary";
+import Icon from "../components/Icon.astro";
 import { FEATURED, searchUrl } from "../lib/phrases";
 import { websiteJsonLd } from "../lib/seo";
 ---
@@ -40,6 +42,20 @@ import { websiteJsonLd } from "../lib/seo";
     <p class="sub">シーンから探す</p>
     <div class="grid grid--cat">
       {CATEGORIES.map((c) => <CategoryTile category={c} />)}
+    </div>
+  </section>
+
+  <section class="explore" aria-labelledby="glossary">
+    <h2 class="h2" id="glossary">Glossary</h2>
+    <p class="sub">スラング・専門用語の意味</p>
+    <div class="grid grid--cat">
+      <a class="cattile" href="/glossary/">
+        <span class="cattile__icon" data-ink="dark" style="background:var(--yellow)"><Icon id="i-study" /></span>
+        <span class="cattile__text">
+          <span class="cattile__name" lang="en">Slang & Terms</span>
+          <span class="cattile__sub">用語集 · {GLOSSARY.length} words</span>
+        </span>
+      </a>
     </div>
   </section>
 </Layout>

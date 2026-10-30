@@ -2,6 +2,7 @@
 import { Font } from "astro:assets";
 import IconSprite from "../components/IconSprite.astro";
 import Nav, { type TabKey } from "../components/Nav.astro";
+import { CATEGORIES, PHRASES } from "../data/phrases";
 import "../styles/global.css";
 import jaFontsHref from "../styles/fonts-ja.css?url";
 
@@ -17,7 +18,7 @@ interface Props {
 
 const HOME_TITLE = "Liftalk（リフトーク）｜スキー・スノボで使える英会話フレーズ";
 const DEFAULT_DESC =
-  "スキー・スノーボード中、海外の友達に言いたいのに出てこない一言を英語で。リフトでの会話、滑りの教え方、パーク、雪と天気など6つのシーン別に検索でき、音声で発音も確認できる英会話フレーズ集。";
+  `スキー・スノーボード中、海外の友達に言いたいのに出てこない一言を英語で。リフトでの会話、パークや地形、パウダー、ツリーラン、転倒時まで${CATEGORIES.length}つのシーン別に${PHRASES.length}フレーズ。音声で発音も確認でき、スラング用語集付き。`;
 const { title, description = DEFAULT_DESC, active = "home", noindex = false, width, jsonLd = [] } = Astro.props;
 const fullTitle = title ? `${title} | Liftalk` : HOME_TITLE;
 const canonical = new URL(Astro.url.pathname, Astro.site);

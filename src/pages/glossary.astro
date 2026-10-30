@@ -1,0 +1,39 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BackButton from "../components/BackButton.astro";
+import { GLOSSARY } from "../data/glossary";
+import { phrasesUsing, phraseUrl } from "../lib/phrases";
+import { breadcrumbs } from "../lib/seo";
+---
+<Layout
+  title="スキー・スノボ英語のスラング・用語集"
+  description={`Send it、Face shot、Blower pow など、海外のスキーヤー・スノーボーダーがよく使うスラングと専門用語${GLOSSARY.length}語の意味。実際の使い方はフレーズ例で確認できます。`}
+  width="narrow"
+  jsonLd={[breadcrumbs([{ name: "用語集", path: "/glossary/" }])]}
+>
+  <BackButton />
+  <h1 class="h1 glossary-title">
+    <span lang="en">Glossary</span>
+    <span class="h1__ja">スキー・スノボのスラング・専門用語</span>
+  </h1>
+  <p class="lede">海外のライダーがよく使う{GLOSSARY.length}語。使われているフレーズがあれば、例としてリンクしています。</p>
+  <dl class="glossary">
+    {GLOSSARY.map((g) => {
+      const examples = phrasesUsing(g);
+      return (
+        <div class="glossary__item" id={g.id}>
+          <dt class="glossary__term" lang="en">{g.term}</dt>
+          <dd class="glossary__ja">{g.ja}</dd>
+          {examples.length > 0 && (
+            <dd class="glossary__examples">
+              <span class="glossary__label">例文</span>
+              <ul class="chips">
+                {examples.map((p) => <li><a class="chip" href={phraseUrl(p)} lang="en">{p.en}</a></li>)}
+              </ul>
+            </dd>
+          )}
+        </div>
+      );
+    })}
+  </dl>
+</Layout>

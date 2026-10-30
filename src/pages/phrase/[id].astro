@@ -5,7 +5,7 @@ import BackButton from "../../components/BackButton.astro";
 import Icon from "../../components/Icon.astro";
 import Swatch from "../../components/Swatch.astro";
 import { PHRASES, type Phrase } from "../../data/phrases";
-import { categoryUrl, getCategory, phrasesIn, phraseUrl } from "../../lib/phrases";
+import { categoryUrl, getCategory, glossaryUrl, phrasesIn, phraseUrl, termsIn } from "../../lib/phrases";
 import { breadcrumbs } from "../../lib/seo";
 
 export const getStaticPaths = (() =>
@@ -14,6 +14,7 @@ export const getStaticPaths = (() =>
 const { phrase: p } = Astro.props as { phrase: Phrase };
 const c = getCategory(p.cat);
 const related = phrasesIn(p.cat).filter((x) => x.id !== p.id).slice(0, 3);
+const terms = termsIn(p);
 ---
 <Layout
   title={`「${p.ja}」は英語で “${p.en}”`}
@@ -36,6 +37,21 @@ const related = phrasesIn(p.cat).filter((x) => x.id !== p.id).slice(0, 3);
     <h2 class="note__label" id="when">When to use</h2>
     <p class="note__body">{p.note}</p>
   </section>
+  {terms.length > 0 && (
+    <section aria-labelledby="terms">
+      <h2 class="h3" id="terms">In the glossary</h2>
+      <ul class="list">
+        {terms.map((g) => (
+          <li>
+            <a class="row" href={glossaryUrl(g)}>
+              <span class="row__text"><span class="row__en" lang="en">{g.term}</span><span class="row__ja">{g.ja}</span></span>
+              <Icon id="i-chevron" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
   {related.length > 0 && (
     <section aria-labelledby="related">
       <h2 class="h3" id="related">Also useful</h2>

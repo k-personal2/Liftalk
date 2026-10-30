@@ -160,7 +160,7 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .cattile__icon[data-ink="dark"]{color:var(--ink)}
 .cattile__text{display:flex;flex-direction:column;gap:4px;min-width:0}
 .cattile__name{font-weight:800;font-size:16px;line-height:1.15;white-space:nowrap}
-.cattile__sub{font-family:var(--jp);font-weight:500;font-size:12px;line-height:1;color:var(--ink-4);white-space:nowrap}
+.cattile__sub{font-family:var(--jp);font-weight:500;font-size:12px;line-height:1.35;color:var(--ink-4)}
 
 /* ---------- results ---------- */
 .topbar{display:flex;align-items:stretch;gap:10px}
@@ -213,6 +213,17 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .row--lg:hover{background:var(--paper);box-shadow:var(--shadow-hover);border-color:var(--orange)}
 .row--lg .row__en{font-size:20px;letter-spacing:-.015em}
 .row--lg .row__ja{font-size:13.5px}
+
+/* ---------- glossary ---------- */
+.glossary-title{margin-top:30px}
+.glossary{margin:0;display:grid;gap:14px}
+.glossary__item{padding:20px 22px;background:var(--paper);border:2px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);scroll-margin-top:20px}
+.glossary__item:target{border-color:var(--orange);box-shadow:var(--hard)}
+.glossary__term{font-weight:900;font-size:22px;line-height:1.2;letter-spacing:-.015em}
+.glossary__ja{margin:6px 0 0;font-family:var(--jp);font-weight:500;font-size:16px;line-height:1.6;color:var(--ink-2)}
+.glossary__examples{margin:14px 0 0}
+.glossary__label{font-weight:800;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4)}
+.glossary__examples .chips{margin-top:8px}
 
 /* ---------- category ---------- */
 .banner{margin:26px 0;padding:28px;border:2px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
