@@ -1,0 +1,12 @@
+---
+/* Square "listen" button. app.ts reads data-speak on click, so no per-button script is needed. */
+import Icon from "./Icon.astro";
+
+interface Props {
+  /** English text to read aloud. */
+  text: string;
+  size?: "md" | "lg";
+}
+const { text, size = "md" } = Astro.props;
+---
+<button class:list={["iconbtn", { "iconbtn--lg": size === "lg" }]} type="button" data-speak={text} aria-label={`Listen: ${text}`}><Icon id="i-speak" /></button>

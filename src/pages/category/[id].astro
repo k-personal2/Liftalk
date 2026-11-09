@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Layout from "../../layouts/Layout.astro";
 import BackButton from "../../components/BackButton.astro";
-import Icon from "../../components/Icon.astro";
+import SpeakButton from "../../components/SpeakButton.astro";
 import { CATEGORIES, type Category } from "../../data/phrases";
 import { categoryUrl, phrasesIn, phraseUrl } from "../../lib/phrases";
 import { breadcrumbs } from "../../lib/seo";
@@ -32,7 +32,7 @@ const list = phrasesIn(c.id);
           <a class="row__link row__en" href={phraseUrl(p)} lang="en">{p.en}</a>
           <span class="row__ja">{p.ja}</span>
         </span>
-        <button class="iconbtn iconbtn--lg" type="button" data-speak={p.en} aria-label={`Listen: ${p.en}`}><Icon id="i-speak" /></button>
+        <SpeakButton text={p.en} size="lg" />
       </li>
     ))}
   </ul>

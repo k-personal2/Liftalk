@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import BackButton from "../components/BackButton.astro";
+import SpeakButton from "../components/SpeakButton.astro";
 import { GLOSSARY } from "../data/glossary";
 import { phrasesUsing, phraseUrl } from "../lib/phrases";
 import { breadcrumbs } from "../lib/seo";
@@ -22,7 +23,7 @@ import { breadcrumbs } from "../lib/seo";
       const examples = phrasesUsing(g);
       return (
         <div class="glossary__item" id={g.id}>
-          <dt class="glossary__term" lang="en">{g.term}</dt>
+          <dt class="glossary__term"><span lang="en">{g.term}</span><SpeakButton text={g.term} /></dt>
           <dd class="glossary__ja">{g.ja}</dd>
           {examples.length > 0 && (
             <dd class="glossary__examples">

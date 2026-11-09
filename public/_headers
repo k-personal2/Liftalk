@@ -1,3 +1,17 @@
+# Security headers for every page.
+# CSP: everything is self-hosted (fonts included), scripts are external modules only — no inline JS anywhere.
+#   style-src needs 'unsafe-inline' for Astro's inlined @font-face <style> and the category colour style="" attributes.
+#   JSON-LD <script type="application/ld+json"> is a data block, not executed, so script-src does not affect it.
+#   If Cloudflare Web Analytics is turned on later, add https://static.cloudflareinsights.com to script-src
+#   and https://cloudflareinsights.com to connect-src.
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin
+
 # Hashed build assets never change under the same name — let browsers keep them for a year.
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable

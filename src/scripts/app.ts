@@ -1,6 +1,9 @@
 /* Site-wide behaviour: listen, save, back, toast. Everything else is plain HTML. */
 import { FAVS_EVENT, getFavs, setFavs } from "../lib/favs";
 
+// Apply stylesheets that were preloaded without blocking render (see Layout.astro).
+document.querySelectorAll<HTMLLinkElement>("link[data-async-css]").forEach((l) => (l.rel = "stylesheet"));
+
 const toastEl = document.getElementById("toast")!;
 let toastTimer: number | undefined;
 

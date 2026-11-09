@@ -1,5 +1,5 @@
 ---
-import Icon from "./Icon.astro";
+import SpeakButton from "./SpeakButton.astro";
 import Swatch from "./Swatch.astro";
 import type { Phrase } from "../data/phrases";
 import { getCategory, phraseUrl } from "../lib/phrases";
@@ -18,7 +18,7 @@ const c = getCategory(p.cat);
   <div class="card__top">
     <Heading class="card__en" lang="en"><a class="card__link" href={phraseUrl(p)}>{p.en}</a></Heading>
     {action === "speak" ? (
-      <button class="iconbtn" type="button" data-speak={p.en} aria-label={`Listen: ${p.en}`}><Icon id="i-speak" /></button>
+      <SpeakButton text={p.en} />
     ) : (
       <button class="favbtn" type="button" data-fav={p.id} aria-pressed="false" aria-label={`Save: ${p.en}`}>☆</button>
     )}

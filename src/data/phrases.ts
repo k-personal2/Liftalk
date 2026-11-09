@@ -73,6 +73,7 @@ export const PHRASES: Phrase[] = [
   {"id":37,"cat":"snow","level":"Beginner","en":"It's a bit heavy.","ja":"ちょっと重い雪だね","note":"水分が多く重たい雪に。湿った雪は wet snow とも言う。","tags":["重い","湿雪","雪質","heavy"]},
   {"id":38,"cat":"snow","level":"Intermediate","en":"It's pretty tracked out.","ja":"かなり荒らされてるね","note":"tracked out = 新雪にシュプールが入りきった状態。","tags":["荒れてる","新雪","雪質","tracked"]},
   {"id":39,"cat":"snow","level":"Beginner","en":"There's still fresh snow over there.","ja":"あっちにまだ新雪あるよ","note":"fresh snow = 新雪。誰も滑っていない場所を見つけたときに。","tags":["新雪","まだ","パウダー","fresh","powder"]},
+  {"id":128,"cat":"snow","level":"Intermediate","en":"Let's go find some untracked snow.","ja":"誰も滑っていない新雪を探しに行こう","note":"untracked = まだ誰のシュプールも入っていない雪。tracked out（荒らされた状態）の反対。","tags":["新雪","ノートラック","パウダー","探す","untracked","powder"]},
   {"id":40,"cat":"snow","level":"Intermediate","en":"That was a face shot!","ja":"顔まで雪かぶった！","note":"face shot = 深雪で舞い上がった雪が顔に当たること。最高のパウダーの証。","tags":["顔","パウダー","スラング","face shot"]},
   {"id":41,"cat":"snow","level":"Intermediate","en":"It's super hard-packed here!","ja":"ここ、雪めっちゃ硬いわ！","note":"hard-packed = 圧雪されて硬く締まった雪。","tags":["硬い","圧雪","雪質","hard-packed"]},
   {"id":42,"cat":"snow","level":"Beginner","en":"It's really icy here!","ja":"ここ、めっちゃアイスバーンだ！","note":"アイスバーンは和製英語。icy で伝わる。","tags":["アイス","アイスバーン","硬い","危ない","icy"]},

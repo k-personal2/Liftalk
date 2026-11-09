@@ -219,7 +219,7 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .glossary{margin:0;display:grid;gap:14px}
 .glossary__item{padding:20px 22px;background:var(--paper);border:2px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);scroll-margin-top:20px}
 .glossary__item:target{border-color:var(--orange);box-shadow:var(--hard)}
-.glossary__term{font-weight:900;font-size:22px;line-height:1.2;letter-spacing:-.015em}
+.glossary__term{display:flex;align-items:center;justify-content:space-between;gap:12px;font-weight:900;font-size:22px;line-height:1.2;letter-spacing:-.015em}
 .glossary__ja{margin:6px 0 0;font-family:var(--jp);font-weight:500;font-size:16px;line-height:1.6;color:var(--ink-2)}
 .glossary__examples{margin:14px 0 0}
 .glossary__label{font-weight:800;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-4)}

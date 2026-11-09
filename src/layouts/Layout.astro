@@ -49,8 +49,9 @@ const ogImage = new URL("/og.png", Astro.site);
   <meta name="twitter:card" content="summary_large_image" />
   {jsonLd.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
   <Font cssVariable="--font-archivo" preload />
-  <!-- Japanese font CSS is large and font-display:swap anyway, so don't let it block first paint. -->
-  <link rel="preload" as="style" href={jaFontsHref} onload="this.onload=null;this.rel='stylesheet'" />
+  <!-- Japanese font CSS is large and font-display:swap anyway, so don't let it block first paint.
+       Fetch starts here; app.ts applies it (no inline onload, so the CSP needs no 'unsafe-inline' for scripts). -->
+  <link rel="preload" as="style" href={jaFontsHref} data-async-css />
   <noscript><link rel="stylesheet" href={jaFontsHref} /></noscript>
 </head>
 <body>
