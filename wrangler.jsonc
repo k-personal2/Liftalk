@@ -7,5 +7,7 @@
     "directory": "./dist",
     "not_found_handling": "404-page"
   },
-  "routes": [{ "pattern": "liftalk.dev", "custom_domain": true }]
+  // Served on liftalk.<account>.workers.dev until liftalk.dev is added to this Cloudflare account.
+  // Then restore: "routes": [{ "pattern": "liftalk.dev", "custom_domain": true }]
+  "workers_dev": true
 }
