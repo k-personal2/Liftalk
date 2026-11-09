@@ -1,5 +1,5 @@
 /* JSON-LD builders. Only describe what is actually visible on the page. */
-const SITE = "https://liftalk.dev";
+const SITE = import.meta.env.SITE.replace(/\/$/, "");
 
 export const websiteJsonLd = {
   "@context": "https://schema.org",

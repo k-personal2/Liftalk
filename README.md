@@ -2,7 +2,7 @@
 
 海外の友達とリフトに乗ったとき、言いたいのに出てこない一言。だから、リフトークで知っておこう。
 
-https://liftalk.dev
+https://liftalk.pages.dev
 
 ## 開発
 
@@ -35,12 +35,15 @@ npm run deploy   # Cloudflare にデプロイ（要 `npx wrangler login`）
 - SNS共有画像 `public/og.png` は `node scripts/generate-og.mjs` で再生成できます。
 - JSON-LD は `src/lib/seo.ts`（トップ：WebSite、カテゴリ・フレーズ：BreadcrumbList）。
 
-## デプロイ（Cloudflare Workers / 静的アセット・無料枠）
+## デプロイ（Cloudflare Pages・無料枠）
 
-設定は `wrangler.jsonc`。Worker スクリプトなしの静的アセット配信なので、リクエストは無料・無制限です。
+設定は `wrangler.jsonc`（`pages_build_output_dir`）。静的出力のみなので Functions は使わず、配信は無料・無制限です。
 
-1. `liftalk.dev` を Cloudflare のアカウントに追加（Cloudflare Registrar で取得するか、他社で取得したドメインのネームサーバーを Cloudflare に向ける）
-2. `npx wrangler login`
-3. `npm run deploy` → `routes` の `custom_domain` により DNS と証明書が自動設定されます
+GitHub 連携で `main` への push ごとに本番デプロイ、他ブランチはプレビュー URL が作られます。
 
-GitHub 連携で push ごとに自動デプロイしたい場合は、Cloudflare ダッシュボード → Workers & Pages → Create → Import a repository で、Build command `npm run build`、Deploy command `npx wrangler deploy` を指定します。
+- Cloudflare ダッシュボード → Workers & Pages → Create → Pages → Import an existing Git repository
+- Framework preset: Astro / Build command: `npm run build` / Build output directory: `dist`
+- Node.js は `.node-version` で指定（Astro 7 は 22.22 以上が必要）
+- `/_astro/*` の長期キャッシュは `public/_headers`
+
+公開 URL を変えるとき（独自ドメイン取得時など）は `astro.config.mjs` の `site` だけを書き換えます。canonical・OGP・JSON-LD・sitemap・robots.txt はすべてそこから生成されます。

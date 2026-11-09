@@ -3,7 +3,8 @@ import { defineConfig, fontProviders } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 
 export default defineConfig({
-  site: "https://liftalk.dev",
+  // The only place the public origin is set: canonical, OGP, JSON-LD, sitemap and robots.txt derive from it.
+  site: "https://liftalk.pages.dev",
   trailingSlash: "always",
   integrations: [
     sitemap({
