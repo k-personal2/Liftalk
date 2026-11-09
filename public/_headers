@@ -2,10 +2,10 @@
 # CSP: everything is self-hosted (fonts included), scripts are external modules only — no inline JS anywhere.
 #   style-src needs 'unsafe-inline' for Astro's inlined @font-face <style> and the category colour style="" attributes.
 #   JSON-LD <script type="application/ld+json"> is a data block, not executed, so script-src does not affect it.
-#   If Cloudflare Web Analytics is turned on later, add https://static.cloudflareinsights.com to script-src
-#   and https://cloudflareinsights.com to connect-src.
+#   Cloudflare Web Analytics (enabled in the Pages dashboard, cookieless): beacon script from static.cloudflareinsights.com,
+#   reports sent to cloudflareinsights.com.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
