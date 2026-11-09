@@ -14,13 +14,20 @@ export function toast(msg: string) {
   toastTimer = window.setTimeout(() => toastEl.classList.remove("is-on"), 1500);
 }
 
-function speak(text: string) {
+function speak(text: string, lang = "en-US") {
   if (!("speechSynthesis" in window)) {
     toast("音声に未対応のブラウザです");
     return;
   }
+  // getVoices() can be empty until the list loads; only bail out when we know the language is missing.
+  const voices = speechSynthesis.getVoices();
+  const base = lang.slice(0, 2);
+  if (voices.length && !voices.some((v) => v.lang.toLowerCase().startsWith(base))) {
+    toast(base === "zh" ? "この端末には中国語の音声がありません" : "この言語の音声がありません");
+    return;
+  }
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "en-US";
+  u.lang = lang;
   u.rate = 0.9;
   speechSynthesis.cancel();
   speechSynthesis.speak(u);
@@ -55,7 +62,7 @@ document.addEventListener("click", (e) => {
   const target = e.target as Element;
   let el: HTMLElement | null;
   if ((el = target.closest<HTMLElement>("[data-speak]"))) {
-    speak(el.dataset.speak!);
+    speak(el.dataset.speak!, el.dataset.speakLang);
   } else if ((el = target.closest<HTMLElement>("[data-fav]"))) {
     toggleFav(Number(el.dataset.fav));
   } else if (target.closest("[data-back]")) {

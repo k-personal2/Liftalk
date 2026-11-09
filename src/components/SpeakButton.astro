@@ -3,10 +3,13 @@
 import Icon from "./Icon.astro";
 
 interface Props {
-  /** English text to read aloud. */
+  /** Text to read aloud. */
   text: string;
   size?: "md" | "lg";
+  /** BCP 47 voice language; app.ts defaults to en-US. */
+  lang?: string;
 }
-const { text, size = "md" } = Astro.props;
+const { text, size = "md", lang } = Astro.props;
+const label = lang?.startsWith("zh") ? `Listen in Chinese: ${text}` : `Listen: ${text}`;
 ---
-<button class:list={["iconbtn", { "iconbtn--lg": size === "lg" }]} type="button" data-speak={text} aria-label={`Listen: ${text}`}><Icon id="i-speak" /></button>
+<button class:list={["iconbtn", { "iconbtn--lg": size === "lg" }]} type="button" data-speak={text} data-speak-lang={lang} aria-label={label}><Icon id="i-speak" /></button>

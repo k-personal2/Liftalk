@@ -3,9 +3,10 @@ import type { GetStaticPaths } from "astro";
 import Layout from "../../layouts/Layout.astro";
 import BackButton from "../../components/BackButton.astro";
 import Icon from "../../components/Icon.astro";
+import SpeakButton from "../../components/SpeakButton.astro";
 import Swatch from "../../components/Swatch.astro";
 import { PHRASES, type Phrase } from "../../data/phrases";
-import { categoryUrl, getCategory, glossaryUrl, phrasesIn, phraseUrl, termsIn } from "../../lib/phrases";
+import { categoryUrl, getCategory, glossaryUrl, phrasesIn, phraseUrl, termsIn, zhRuby } from "../../lib/phrases";
 import { breadcrumbs } from "../../lib/seo";
 
 export const getStaticPaths = (() =>
@@ -15,10 +16,11 @@ const { phrase: p } = Astro.props as { phrase: Phrase };
 const c = getCategory(p.cat);
 const related = phrasesIn(p.cat).filter((x) => x.id !== p.id).slice(0, 3);
 const terms = termsIn(p);
+const ruby = zhRuby(p);
 ---
 <Layout
   title={`「${p.ja}」は英語で “${p.en}”`}
-  description={`「${p.ja}」を英語で言うと “${p.en}”。${p.note}スノーボード・スキーで使える英会話フレーズ。`}
+  description={`「${p.ja}」を英語で言うと “${p.en}”。中国語では「${p.zh.replace(/[。！？]$/, "")}」。${p.note}スノーボード・スキーで使える英会話フレーズ。`}
   width="narrow"
   jsonLd={[breadcrumbs([{ name: c.ja, path: categoryUrl(c) }, { name: p.ja, path: phraseUrl(p) }])]}
 >
@@ -36,6 +38,17 @@ const terms = termsIn(p);
   <section class="note" aria-labelledby="when">
     <h2 class="note__label" id="when">When to use</h2>
     <p class="note__body">{p.note}</p>
+  </section>
+  <section class="zh" aria-labelledby="zh-label">
+    <h2 class="note__label" id="zh-label">In Chinese<span class="zh__label-ja">中国語（簡体字）</span></h2>
+    <div class="zh__body">
+      <p class="zh__text" lang="zh-CN">
+        {/* Ruby is for the eyes; screen readers get the plain sentence once instead of character-by-character. */}
+        <span aria-hidden="true">{ruby.map((t) => (t.rt ? <ruby>{t.text}<rt lang="zh-Latn-pinyin">{t.rt}</rt></ruby> : t.text))}</span>
+        <span class="sr-only">{p.zh}</span>
+      </p>
+      <SpeakButton text={p.zh} lang="zh-CN" />
+    </div>
   </section>
   {terms.length > 0 && (
     <section aria-labelledby="terms">

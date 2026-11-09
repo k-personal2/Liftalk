@@ -41,6 +41,18 @@ export function searchPhrases(q: string): Phrase[] {
   });
 }
 
+/** Pairs each Han character in `zh` with its pinyin syllable for <ruby>; punctuation passes through.
+ *  Throws at build time if the counts drift apart, so a bad edit can never ship misaligned ruby. */
+export function zhRuby(p: Pick<Phrase, "id" | "zh" | "pinyin">): { text: string; rt?: string }[] {
+  const syllables = p.pinyin.split(/\s+/);
+  let i = 0;
+  const tokens = [...p.zh].map((ch) => (/\p{Script=Han}/u.test(ch) ? { text: ch, rt: syllables[i++] } : { text: ch }));
+  if (i !== syllables.length || tokens.some((t) => t.rt === undefined && /\p{Script=Han}/u.test(t.text))) {
+    throw new Error(`Phrase ${p.id}: ${i} Han characters but ${syllables.length} pinyin syllables`);
+  }
+  return tokens;
+}
+
 /** First N phrases form the Study deck and the home page's Featured list. */
 export const STUDY_POOL = PHRASES.slice(0, 12);
 export const FEATURED = PHRASES.slice(0, 6);
