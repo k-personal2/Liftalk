@@ -1,5 +1,5 @@
 /* Liftalk — content data. Edit freely; every page reads only from here. */
-export type CategoryId = "lift" | "tech" | "park" | "snow" | "trees" | "safe" | "wipeout" | "hype" | "after";
+export type CategoryId = "lift" | "tech" | "park" | "snow" | "trees" | "safe" | "wipeout" | "hype" | "after" | "break";
 export type Level = "Beginner" | "Intermediate";
 
 export interface Category {
@@ -34,7 +34,8 @@ export const CATEGORIES: Category[] = [
   {"id":"safe","name":"Safety & Directions","ja":"安全・方向","color":"#E01F1F","ink":"light","icon":"c-safe"},
   {"id":"wipeout","name":"Wipeouts","ja":"転倒・トラブル","color":"#6A4FC9","ink":"light","icon":"c-wipeout"},
   {"id":"hype","name":"Hype & Props","ja":"盛り上がる・褒める","color":"#D6336C","ink":"light","icon":"c-hype"},
-  {"id":"after","name":"After Riding","ja":"滑った後","color":"#7A6A56","ink":"light","icon":"c-after"}
+  {"id":"after","name":"After Riding","ja":"滑った後","color":"#7A6A56","ink":"light","icon":"c-after"},
+  {"id":"break","name":"Food & Breaks","ja":"食事・休憩","color":"#A85F0A","ink":"light","icon":"c-break"}
 ];
 
 export const PHRASES: Phrase[] = [
@@ -165,7 +166,64 @@ export const PHRASES: Phrase[] = [
   {"id":124,"cat":"after","level":"Intermediate","en":"Let's check the footage.","ja":"動画確認しよう","zh":"看看视频吧。","pinyin":"kàn kan shì pín ba","note":"footage = 撮った映像。","tags":["動画","撮影","確認","footage"]},
   {"id":125,"cat":"after","level":"Beginner","en":"Did you get my jump?","ja":"俺のジャンプ撮れた？","zh":"我的跳跃拍到了吗？","pinyin":"wǒ de tiào yuè pāi dào le ma","note":"get = 撮る。撮影してくれた仲間に。","tags":["撮れた","動画","ジャンプ","撮影","jump"]},
   {"id":126,"cat":"after","level":"Beginner","en":"Let's grab a beer later.","ja":"あとでビール飲もう","zh":"晚点去喝啤酒吧。","pinyin":"wǎn diǎn qù hē pí jiǔ ba","note":"grab a beer = 軽く一杯飲む。アフタースキーの誘い。","tags":["ビール","飲む","アフター","beer"]},
-  {"id":127,"cat":"after","level":"Beginner","en":"What a day!","ja":"最高の一日だった！","zh":"今天太爽了！","pinyin":"jīn tiān tài shuǎng le","note":"一日の締めくくりに。","tags":["最高","一日","day"]}
+  {"id":127,"cat":"after","level":"Beginner","en":"What a day!","ja":"最高の一日だった！","zh":"今天太爽了！","pinyin":"jīn tiān tài shuǎng le","note":"一日の締めくくりに。","tags":["最高","一日","day"]},
+  {"id":129,"cat":"tech","level":"Beginner","en":"Keep your upper body relaxed.","ja":"上半身の力を抜いて","zh":"上半身放松。","pinyin":"shàng bàn shēn fàng sōng","note":"力むと板が思うように動かない。relaxed = 力が抜けた状態。","tags":["上半身","力を抜く","リラックス","relaxed","upper body","technique"]},
+  {"id":130,"cat":"tech","level":"Beginner","en":"Don't look down at your feet.","ja":"足元を見ないで","zh":"别看脚下。","pinyin":"bié kàn jiǎo xià","note":"初心者は足元を見がち。Look ahead.（前を見て）とセットで使う。","tags":["足元","視線","目線","look down","feet","technique","初心者"]},
+  {"id":131,"cat":"tech","level":"Beginner","en":"Keep your eyes on the slope ahead.","ja":"前方の斜面を見て","zh":"眼睛看着前面的雪道。","pinyin":"yǎn jing kàn zhe qián miàn de xuě dào","note":"keep your eyes on ~ = ~から目を離さない。視線を先に置かせる。","tags":["前","視線","目線","斜面","eyes","slope","ahead","technique"]},
+  {"id":132,"cat":"tech","level":"Intermediate","en":"Shift your weight slowly.","ja":"ゆっくり重心を移動して","zh":"慢慢移动重心。","pinyin":"màn màn yí dòng zhòng xīn","note":"shift = 移す。ターンの切り替えで急に体重を移さないように。","tags":["重心","体重","移動","weight","shift","technique"]},
+  {"id":133,"cat":"tech","level":"Beginner","en":"Don't lean back.","ja":"後ろに体重をかけないで","zh":"别往后坐。","pinyin":"bié wǎng hòu zuò","note":"怖くなると後傾になりやすい。lean back = 後ろにもたれる。","tags":["後傾","体重","lean","back","technique","初心者"]},
+  {"id":134,"cat":"tech","level":"Beginner","en":"Keep your knees slightly bent.","ja":"膝を軽く曲げたままにして","zh":"膝盖保持微微弯曲。","pinyin":"xī gài bǎo chí wēi wēi wān qū","note":"slightly = 少しだけ。Bend your knees more. より穏やかな言い方。","tags":["膝","曲げる","knees","bent","bend","technique"]},
+  {"id":135,"cat":"tech","level":"Intermediate","en":"Try turning with your whole body.","ja":"体全体を使ってターンしてみて","zh":"试着用整个身体转弯。","pinyin":"shì zhe yòng zhěng gè shēn tǐ zhuǎn wān","note":"足先だけで回そうとしている人に。whole body = 体全体。","tags":["ターン","体全体","turn","whole body","technique"]},
+  {"id":136,"cat":"tech","level":"Beginner","en":"Start with a small turn.","ja":"小さくターンすることから始めて","zh":"先从小转弯开始。","pinyin":"xiān cóng xiǎo zhuǎn wān kāi shǐ","note":"start with ~ = ~から始める。いきなり大きく回らせない。","tags":["ターン","小さく","turn","small","start","technique","初心者"]},
+  {"id":137,"cat":"tech","level":"Beginner","en":"Take it one step at a time.","ja":"一つずつやっていこう","zh":"一步一步来。","pinyin":"yí bù yí bù lái","note":"焦っている人に。滑り以外の場面でも使える定番表現。","tags":["一つずつ","焦らない","step","technique","初心者"]},
+  {"id":138,"cat":"tech","level":"Intermediate","en":"Use your edges to slow down.","ja":"エッジを使ってスピードを落として","zh":"用刃减速。","pinyin":"yòng rèn jiǎn sù","note":"slow down = 減速する。スピードが出すぎて怖がっている人に。","tags":["エッジ","edge","減速","スピード","slow down","technique"]},
+  {"id":139,"cat":"tech","level":"Intermediate","en":"Don't rush the turn.","ja":"ターンを急がないで","zh":"转弯别着急。","pinyin":"zhuǎn wān bié zháo jí","note":"rush = 急ぐ。ターンを最後まで丁寧に描かせたいときに。","tags":["ターン","急がない","焦らない","rush","turn","technique"]},
+  {"id":140,"cat":"tech","level":"Intermediate","en":"Let the board glide naturally.","ja":"ボードを自然に滑らせて","zh":"让板子自然滑行。","pinyin":"ràng bǎn zi zì rán huá xíng","note":"glide = すーっと滑る。板を無理に操作しすぎる人に。","tags":["ボード","板","滑らせる","glide","board","technique"]},
+  {"id":141,"cat":"tech","level":"Intermediate","en":"Keep your shoulders facing downhill.","ja":"肩を斜面の下側に向けて","zh":"肩膀朝向山下。","pinyin":"jiān bǎng cháo xiàng shān xià","note":"downhill = 斜面の下方向。上半身が山側に開く人に。","tags":["肩","向き","斜面","shoulders","downhill","technique"]},
+  {"id":142,"cat":"tech","level":"Beginner","en":"Bend your ankles and knees.","ja":"足首と膝を曲げて","zh":"弯曲脚踝和膝盖。","pinyin":"wān qū jiǎo huái hé xī gài","note":"ankle = 足首。膝だけでなく足首も曲げると姿勢が安定する。","tags":["足首","膝","曲げる","ankles","knees","bend","technique"]},
+  {"id":143,"cat":"tech","level":"Intermediate","en":"Try putting more pressure on your toes.","ja":"つま先側にもっと体重をかけてみて","zh":"试着把重心多放在脚尖。","pinyin":"shì zhe bǎ zhòng xīn duō fàng zài jiǎo jiān","note":"pressure = 圧・体重。スノーボードのトゥサイドターンの練習に。","tags":["つま先","トゥサイド","体重","toes","toe side","pressure","technique"]},
+  {"id":144,"cat":"tech","level":"Intermediate","en":"Now try it on your heels.","ja":"今度はかかと側でやってみて","zh":"现在换脚跟试试。","pinyin":"xiàn zài huàn jiǎo gēn shì shi","note":"つま先側の練習のあとに。heel side = かかと側（ヒールサイド）。","tags":["かかと","ヒールサイド","heels","heel side","technique"]},
+  {"id":145,"cat":"tech","level":"Intermediate","en":"Keep your movements smooth.","ja":"動きを滑らかにして","zh":"动作要流畅。","pinyin":"dòng zuò yào liú chàng","note":"smooth = 滑らか。動きがカクカクしている人に。","tags":["動き","滑らか","smooth","movements","technique"]},
+  {"id":146,"cat":"tech","level":"Intermediate","en":"Don't fight the slope.","ja":"斜面に逆らわないで","zh":"别跟坡较劲。","pinyin":"bié gēn pō jiào jìn","note":"fight = 抵抗する。斜面に対して体が逃げている人に。","tags":["斜面","逆らう","fight","slope","technique"]},
+  {"id":147,"cat":"tech","level":"Beginner","en":"Follow my tracks.","ja":"私の滑った跡についてきて","zh":"跟着我的滑痕走。","pinyin":"gēn zhe wǒ de huá hén zǒu","note":"tracks = 雪面に残る滑った跡。前を滑ってお手本を見せるときに。","tags":["ついてきて","跡","tracks","follow","technique"]},
+  {"id":148,"cat":"tech","level":"Beginner","en":"That's it! You're getting the hang of it!","ja":"そうそう！コツをつかんできたね！","zh":"对对！你找到感觉了！","pinyin":"duì duì nǐ zhǎo dào gǎn jué le","note":"get the hang of it = コツをつかむ。できた瞬間に声をかける。","tags":["コツ","そうそう","hang","褒める","technique"]},
+  {"id":149,"cat":"hype","level":"Beginner","en":"Great job!","ja":"いいね！よくできた！","zh":"干得好！","pinyin":"gàn de hǎo","note":"褒め言葉の基本。何かがうまくできたらまずこれ。","tags":["褒める","いいね","great","job","praise"]},
+  {"id":150,"cat":"hype","level":"Beginner","en":"Well done!","ja":"よくできたね！","zh":"做得好！","pinyin":"zuò de hǎo","note":"Great job! と同じくらい使える定番。","tags":["褒める","よくできた","well done","praise"]},
+  {"id":151,"cat":"hype","level":"Beginner","en":"You're doing great!","ja":"すごくいい感じだよ！","zh":"你滑得很好！","pinyin":"nǐ huá de hěn hǎo","note":"練習の途中で励ますときに。進行形で「今いい感じ」を伝える。","tags":["褒める","励ます","いい感じ","great","praise"]},
+  {"id":152,"cat":"hype","level":"Beginner","en":"Much better!","ja":"さっきよりずっといいね！","zh":"好多了！","pinyin":"hǎo duō le","note":"前の一本と比べて良くなったときに。much = ずっと。","tags":["褒める","上達","better","praise"]},
+  {"id":153,"cat":"hype","level":"Beginner","en":"That's the way!","ja":"その調子！","zh":"就是这样！","pinyin":"jiù shì zhè yàng","note":"正しいやり方ができているときの一言。","tags":["褒める","その調子","way","praise"]},
+  {"id":154,"cat":"hype","level":"Beginner","en":"You've got it!","ja":"そう、それだよ！","zh":"你做到了！","pinyin":"nǐ zuò dào le","note":"教えていたことができた瞬間に。got it = できた・わかった。","tags":["褒める","できた","got it","praise"]},
+  {"id":155,"cat":"hype","level":"Beginner","en":"You're getting better!","ja":"上達してるね！","zh":"你越来越好了！","pinyin":"nǐ yuè lái yuè hǎo le","note":"get better = 上達する。一日の中での成長を伝えるときに。","tags":["褒める","上達","better","praise"]},
+  {"id":156,"cat":"hype","level":"Beginner","en":"Nice turn!","ja":"いいターンだね！","zh":"这个弯转得漂亮！","pinyin":"zhè ge wān zhuǎn de piào liang","note":"Nice ~! で何でも褒められる。Nice jump! / Nice line! など。","tags":["褒める","ターン","turn","nice","praise"]},
+  {"id":157,"cat":"hype","level":"Beginner","en":"Smooth riding!","ja":"滑りが滑らかだね！","zh":"滑得真顺！","pinyin":"huá de zhēn shùn","note":"smooth = 滑らか。きれいに滑れている人に。","tags":["褒める","滑らか","smooth","riding","praise"]},
+  {"id":158,"cat":"hype","level":"Intermediate","en":"You nailed it!","ja":"完璧にできたね！","zh":"完美！","pinyin":"wán měi","note":"nail it = 完璧に決める。トリックにも練習にも使える。","tags":["褒める","完璧","nailed","praise"]},
+  {"id":159,"cat":"hype","level":"Beginner","en":"That was awesome!","ja":"今のすごかったよ！","zh":"刚才太棒了！","pinyin":"gāng cái tài bàng le","note":"awesome = 最高。That was ~! で直前の滑りを褒める。","tags":["褒める","すごい","awesome","praise"]},
+  {"id":160,"cat":"hype","level":"Intermediate","en":"Look at you go!","ja":"すごい、滑れてるじゃん！","zh":"看你滑得多好！","pinyin":"kàn nǐ huá de duō hǎo","note":"相手の上達ぶりに驚いたときの決まり文句。","tags":["褒める","滑れてる","look","go","praise"]},
+  {"id":161,"cat":"hype","level":"Beginner","en":"See? You can do it!","ja":"ほら、できるじゃない！","zh":"看吧，你能行！","pinyin":"kàn ba nǐ néng xíng","note":"不安がっていた人ができたときに。See? = ほらね。","tags":["褒める","できる","励ます","can do","praise"]},
+  {"id":162,"cat":"hype","level":"Beginner","en":"You're a natural!","ja":"センスあるね！","zh":"你很有天赋！","pinyin":"nǐ hěn yǒu tiān fù","note":"natural = 生まれつき才能がある人。初めてなのに上手な人に。","tags":["褒める","センス","才能","natural","praise"]},
+  {"id":163,"cat":"hype","level":"Beginner","en":"Don't give up!","ja":"諦めないで！","zh":"别放弃！","pinyin":"bié fàng qì","note":"何度も転んでめげそうな人に。give up = 諦める。","tags":["励ます","諦めない","give up","encourage"]},
+  {"id":164,"cat":"hype","level":"Beginner","en":"Keep it up!","ja":"その調子で続けて！","zh":"继续加油！","pinyin":"jì xù jiā yóu","note":"keep it up = 今の良い状態を続ける。","tags":["励ます","その調子","keep it up","encourage"]},
+  {"id":165,"cat":"hype","level":"Beginner","en":"You're almost there!","ja":"もう少しだよ！","zh":"就差一点了！","pinyin":"jiù chà yì diǎn le","note":"できるまであと一歩のときにも、下までもう少しのときにも使える。","tags":["励ます","もう少し","almost","encourage"]},
+  {"id":166,"cat":"hype","level":"Beginner","en":"No worries, take your time.","ja":"大丈夫、焦らなくていいよ","zh":"没关系，慢慢来。","pinyin":"méi guān xi màn màn lái","note":"take your time = 自分のペースでいい。待たせて焦っている人に。","tags":["励ます","焦らない","大丈夫","take your time","encourage"]},
+  {"id":167,"cat":"hype","level":"Beginner","en":"That was brave of you!","ja":"よく挑戦したね！","zh":"你真勇敢！","pinyin":"nǐ zhēn yǒng gǎn","note":"brave = 勇気がある。失敗しても挑戦したこと自体を褒める。","tags":["褒める","挑戦","勇気","brave","praise"]},
+  {"id":168,"cat":"break","level":"Beginner","en":"I'm getting hungry.","ja":"お腹が空いてきた","zh":"我有点饿了。","pinyin":"wǒ yǒu diǎn è le","note":"getting ~ = だんだん~になってきた。休憩を切り出すきっかけに。","tags":["お腹","空腹","hungry","food","食事"]},
+  {"id":169,"cat":"break","level":"Beginner","en":"Let's grab something to eat.","ja":"何か食べよう","zh":"去吃点东西吧。","pinyin":"qù chī diǎn dōng xi ba","note":"grab = 手早く取る。軽く食べるニュアンス。","tags":["食べる","食事","grab","eat","food"]},
+  {"id":170,"cat":"break","level":"Beginner","en":"Let's have lunch.","ja":"お昼ご飯にしよう","zh":"吃午饭吧。","pinyin":"chī wǔ fàn ba","note":"お昼休憩の定番。have lunch = 昼食をとる。","tags":["昼ご飯","ランチ","lunch","食事"]},
+  {"id":171,"cat":"break","level":"Beginner","en":"Do you want to get some food?","ja":"何か食べない？","zh":"要不要吃点东西？","pinyin":"yào bu yào chī diǎn dōng xi","note":"相手を誘う言い方。Wanna get some food? とくだけても言う。","tags":["食べる","誘う","food","食事"]},
+  {"id":172,"cat":"break","level":"Beginner","en":"I'm starving!","ja":"お腹ペコペコ！","zh":"我饿死了！","pinyin":"wǒ è sǐ le","note":"starving = 死ぬほどお腹が空いた。hungry より強い。","tags":["お腹","空腹","starving","食事"]},
+  {"id":173,"cat":"break","level":"Beginner","en":"I need a little rest.","ja":"ちょっと休みたい","zh":"我想休息一下。","pinyin":"wǒ xiǎng xiū xi yí xià","note":"rest = 休息。疲れたことを素直に伝えるときに。","tags":["休憩","休む","rest","break"]},
+  {"id":174,"cat":"break","level":"Beginner","en":"Let's warm up inside.","ja":"中で暖まろう","zh":"去里面暖和一下吧。","pinyin":"qù lǐ miàn nuǎn huo yí xià ba","note":"warm up = 体を暖める。寒い日にロッジへ誘うときに。","tags":["暖まる","寒い","ロッジ","warm up","inside","break"]},
+  {"id":175,"cat":"break","level":"Beginner","en":"I'm getting cold.","ja":"寒くなってきた","zh":"我开始冷了。","pinyin":"wǒ kāi shǐ lěng le","note":"getting ~ = だんだん~になってきた。","tags":["寒い","cold","break"]},
+  {"id":176,"cat":"break","level":"Beginner","en":"My hands are freezing!","ja":"手が凍りそう！","zh":"我的手要冻僵了！","pinyin":"wǒ de shǒu yào dòng jiāng le","note":"freezing = 凍えるほど寒い。手を feet にすれば「足が」。","tags":["寒い","手","freezing","cold","break"]},
+  {"id":177,"cat":"break","level":"Beginner","en":"Let's get a hot drink.","ja":"温かい飲み物を飲もう","zh":"喝点热的吧。","pinyin":"hē diǎn rè de ba","note":"hot drink = 温かい飲み物。ココアやコーヒーなど。","tags":["飲み物","温かい","hot drink","drink","break"]},
+  {"id":178,"cat":"break","level":"Beginner","en":"How about some coffee?","ja":"コーヒーでもどう？","zh":"来杯咖啡怎么样？","pinyin":"lái bēi kā fēi zěn me yàng","note":"How about ~? = ~はどう？と提案する言い方。","tags":["コーヒー","飲み物","coffee","drink","break"]},
+  {"id":179,"cat":"break","level":"Beginner","en":"Let's sit down for a bit.","ja":"ちょっと座ろう","zh":"坐一下吧。","pinyin":"zuò yí xià ba","note":"for a bit = 少しの間。","tags":["座る","休憩","sit down","break"]},
+  {"id":180,"cat":"break","level":"Beginner","en":"My legs are getting tired.","ja":"足が疲れてきた","zh":"腿开始累了。","pinyin":"tuǐ kāi shǐ lèi le","note":"My legs are done. ほど限界ではないときに。","tags":["足","脚","疲れた","tired","legs","break"]},
+  {"id":181,"cat":"break","level":"Beginner","en":"I'm exhausted!","ja":"もうヘトヘト！","zh":"累死我了！","pinyin":"lèi sǐ wǒ le","note":"exhausted = 疲れ切った。tired より強い。","tags":["疲れた","ヘトヘト","exhausted","tired","break"]},
+  {"id":182,"cat":"break","level":"Beginner","en":"I'm ready to go again.","ja":"また滑る準備できたよ","zh":"我可以继续滑了。","pinyin":"wǒ kě yǐ jì xù huá le","note":"休憩明けに。ready to ~ = ~する準備ができた。","tags":["準備","再開","ready","again","break"]},
+  {"id":183,"cat":"break","level":"Beginner","en":"What time should we meet?","ja":"何時に待ち合わせる？","zh":"我们几点集合？","pinyin":"wǒ men jǐ diǎn jí hé","note":"別行動する前に。meet = 待ち合わせる。","tags":["待ち合わせ","集合","時間","meet","time","break"]},
+  {"id":184,"cat":"break","level":"Beginner","en":"I'll meet you at the lift.","ja":"リフトのところで合流しよう","zh":"在缆车那里会合吧。","pinyin":"zài lǎn chē nà lǐ huì hé ba","note":"lift を gondola や lodge に替えても使える。","tags":["合流","集合","リフト","meet","lift","break"]},
+  {"id":185,"cat":"break","level":"Intermediate","en":"Let's call it a day.","ja":"今日はもう終わりにしよう","zh":"今天就到这里吧。","pinyin":"jīn tiān jiù dào zhè lǐ ba","note":"call it a day = その日の活動を切り上げる。滑り納めの合図に。","tags":["終わり","帰る","call it a day","break"]}
 ];
 
 export const QUICK_CHIPS = ["前を見て","powder","ボックス","lift","膝"];
