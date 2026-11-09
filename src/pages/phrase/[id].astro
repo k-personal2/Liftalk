@@ -39,8 +39,9 @@ const ruby = zhRuby(p);
     <h2 class="note__label" id="when">When to use</h2>
     <p class="note__body">{p.note}</p>
   </section>
-  <section class="zh" aria-labelledby="zh-label">
-    <h2 class="note__label" id="zh-label">In Chinese<span class="zh__label-ja">中国語（簡体字）</span></h2>
+  {/* Opt-in: hidden by default so English learners aren't distracted; app.ts remembers the choice across pages. */}
+  <details class="zh" data-zh>
+    <summary class="zh__summary"><h2 class="zh__label">中国語でも見る<span class="zh__label-sub" lang="zh-CN">中文</span></h2></summary>
     <div class="zh__body">
       <p class="zh__text" lang="zh-CN">
         {/* Ruby is for the eyes; screen readers get the plain sentence once instead of character-by-character. */}
@@ -49,7 +50,7 @@ const ruby = zhRuby(p);
       </p>
       <SpeakButton text={p.zh} lang="zh-CN" />
     </div>
-  </section>
+  </details>
   {terms.length > 0 && (
     <section aria-labelledby="terms">
       <h2 class="h3" id="terms">In the glossary</h2>

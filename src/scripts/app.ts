@@ -1,8 +1,15 @@
 /* Site-wide behaviour: listen, save, back, toast. Everything else is plain HTML. */
-import { FAVS_EVENT, getFavs, setFavs } from "../lib/favs";
+import { FAVS_EVENT, getFavs, getShowZh, setFavs, setShowZh } from "../lib/favs";
 
 // Apply stylesheets that were preloaded without blocking render (see Layout.astro).
 document.querySelectorAll<HTMLLinkElement>("link[data-async-css]").forEach((l) => (l.rel = "stylesheet"));
+
+// Chinese panel on phrase pages: reopen it if the visitor turned it on before.
+const zhPanel = document.querySelector<HTMLDetailsElement>("details[data-zh]");
+if (zhPanel) {
+  zhPanel.open = getShowZh();
+  zhPanel.addEventListener("toggle", () => setShowZh(zhPanel.open));
+}
 
 const toastEl = document.getElementById("toast")!;
 let toastTimer: number | undefined;

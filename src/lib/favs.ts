@@ -22,4 +22,8 @@ export const setFavs = (favs: number[]) => write(FAV_KEY, favs);
 export const getStudyIdx = (): number => read(STUDY_KEY, 0);
 export const setStudyIdx = (i: number) => write(STUDY_KEY, i);
 
+const ZH_KEY = "liftalk.zh.v1";
+export const getShowZh = (): boolean => read<unknown>(ZH_KEY, false) === true;
+export const setShowZh = (on: boolean) => write(ZH_KEY, on);
+
 export const FAVS_EVENT = "liftalk:favs";
