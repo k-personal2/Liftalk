@@ -32,7 +32,7 @@ npm run deploy   # Cloudflare にデプロイ（要 `npx wrangler login`）
 - フレーズ詳細・カテゴリは**ビルド時に静的生成**（SEO対象）。検索・Saved・Study はページ内の小さな `<script>` が `hidden` を切り替えるだけ。
 - フォント：Archivo は Astro Fonts API でセルフホスト＋preload。Zen Kaku Gothic New は `@fontsource` を非同期読み込み（描画をブロックしない）。
 - フレーズを追加したら `npm run build` するだけで詳細ページ・サイトマップも増えます。
-- SNS共有画像 `public/og.png` は `node scripts/generate-og.mjs` で再生成できます。
+- SNS共有画像 `public/og.png`（1200×630）とアイコン類（`favicon.svg` / `favicon.ico` / `apple-touch-icon.png` / `icon-192.png` / `icon-512.png`）は `public/` に直接置いています。差し替えるときは同じファイル名で上書きしてください。
 - JSON-LD は `src/lib/seo.ts`（トップ：WebSite、カテゴリ・フレーズ：BreadcrumbList）。
 
 ## デプロイ（Cloudflare Pages・無料枠）
