@@ -24,6 +24,21 @@ export function toast(msg: string) {
 // Held so the engine can't garbage-collect an utterance while it is still speaking.
 let utterance: SpeechSynthesisUtterance | null = null;
 
+// WebKit (iOS 17+): treat page audio like a media player so a tapped "Listen" isn't swallowed by the ambient/ringer route.
+const nav = navigator as Navigator & { audioSession?: { type: string } };
+if (nav.audioSession) nav.audioSession.type = "playback";
+
+// ?debug: on-screen speech log for checking real devices without a Mac attached.
+const debugEl = new URLSearchParams(location.search).has("debug") ? document.createElement("pre") : null;
+if (debugEl) {
+  debugEl.style.cssText =
+    "position:fixed;top:0;left:0;right:0;z-index:99;max-height:45vh;overflow:auto;margin:0;padding:8px;background:#000c;color:#0f0;font:12px/1.4 monospace;white-space:pre-wrap";
+  document.body.append(debugEl);
+}
+function log(msg: string) {
+  if (debugEl) debugEl.textContent += `${new Date().toLocaleTimeString()} ${msg}\n`;
+}
+
 function speak(text: string, lang = "en-US") {
   if (!("speechSynthesis" in window)) {
     toast("音声に未対応のブラウザです");
@@ -35,6 +50,7 @@ function speak(text: string, lang = "en-US") {
   const norm = (l: string) => l.toLowerCase().replace("_", "-");
   const base = lang.slice(0, 2);
   const matches = voices.filter((v) => norm(v.lang).startsWith(base));
+  log(`voices=${voices.length} ${base}=${matches.length} [${matches.slice(0, 4).map((v) => v.name).join(", ")}] session=${nav.audioSession?.type ?? "n/a"} speaking=${synth.speaking} pending=${synth.pending} paused=${synth.paused}`);
   if (voices.length && !matches.length) {
     toast(base === "zh" ? "この端末には中国語の音声がありません" : "この言語の音声がありません");
     return;
@@ -45,10 +61,13 @@ function speak(text: string, lang = "en-US") {
   // No explicit u.voice: iOS lists voices that aren't downloaded, and picking one plays silence. lang alone gets the system default.
   utterance = u;
   u.onend = () => {
+    log("onend");
     if (utterance === u) utterance = null;
   };
+  u.onstart = () => log("onstart");
   // "interrupted"/"canceled" are our own cancel(); anything else is worth surfacing.
   u.onerror = (e) => {
+    log(`onerror ${e.error}`);
     if (e.error !== "interrupted" && e.error !== "canceled") toast(`音声を再生できませんでした（${e.error}）`);
   };
   // iOS Safari silently drops an utterance queued in the same tick as cancel(),
@@ -61,6 +80,7 @@ function speak(text: string, lang = "en-US") {
     synth.resume();
     synth.speak(u);
   }
+  setTimeout(() => log(`+500ms speaking=${synth.speaking} pending=${synth.pending}`), 500);
   toast("Playing…");
 }
 
