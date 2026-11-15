@@ -42,11 +42,14 @@ function speak(text: string, lang = "en-US") {
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = 0.9;
-  const voice = matches.find((v) => norm(v.lang) === norm(lang)) ?? matches[0];
-  if (voice) u.voice = voice;
+  // No explicit u.voice: iOS lists voices that aren't downloaded, and picking one plays silence. lang alone gets the system default.
   utterance = u;
   u.onend = () => {
     if (utterance === u) utterance = null;
+  };
+  // "interrupted"/"canceled" are our own cancel(); anything else is worth surfacing.
+  u.onerror = (e) => {
+    if (e.error !== "interrupted" && e.error !== "canceled") toast(`音声を再生できませんでした（${e.error}）`);
   };
   // iOS Safari silently drops an utterance queued in the same tick as cancel(),
   // so only cancel when something is playing, and queue the new one after it settles.
