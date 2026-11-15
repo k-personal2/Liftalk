@@ -21,23 +21,43 @@ export function toast(msg: string) {
   toastTimer = window.setTimeout(() => toastEl.classList.remove("is-on"), 1500);
 }
 
+// Held so the engine can't garbage-collect an utterance while it is still speaking.
+let utterance: SpeechSynthesisUtterance | null = null;
+
 function speak(text: string, lang = "en-US") {
   if (!("speechSynthesis" in window)) {
     toast("音声に未対応のブラウザです");
     return;
   }
+  const synth = speechSynthesis;
   // getVoices() can be empty until the list loads; only bail out when we know the language is missing.
-  const voices = speechSynthesis.getVoices();
+  const voices = synth.getVoices();
+  const norm = (l: string) => l.toLowerCase().replace("_", "-");
   const base = lang.slice(0, 2);
-  if (voices.length && !voices.some((v) => v.lang.toLowerCase().startsWith(base))) {
+  const matches = voices.filter((v) => norm(v.lang).startsWith(base));
+  if (voices.length && !matches.length) {
     toast(base === "zh" ? "この端末には中国語の音声がありません" : "この言語の音声がありません");
     return;
   }
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = 0.9;
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
+  const voice = matches.find((v) => norm(v.lang) === norm(lang)) ?? matches[0];
+  if (voice) u.voice = voice;
+  utterance = u;
+  u.onend = () => {
+    if (utterance === u) utterance = null;
+  };
+  // iOS Safari silently drops an utterance queued in the same tick as cancel(),
+  // so only cancel when something is playing, and queue the new one after it settles.
+  if (synth.speaking || synth.pending) {
+    synth.cancel();
+    setTimeout(() => synth.speak(u), 60);
+  } else {
+    // iOS can leave the queue paused after the tab was backgrounded.
+    synth.resume();
+    synth.speak(u);
+  }
   toast("Playing…");
 }
 

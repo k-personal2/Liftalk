@@ -1,15 +1,15 @@
 ---
-/* Square "listen" button. app.ts reads data-speak on click, so no per-button script is needed. */
+/* "Listen" pill (icon + label), same look as the Study button. app.ts reads data-speak on click, so no per-button script is needed. */
 import Icon from "./Icon.astro";
 
 interface Props {
   /** Text to read aloud. */
   text: string;
-  size?: "md" | "lg";
   /** BCP 47 voice language; app.ts defaults to en-US. */
   lang?: string;
 }
-const { text, size = "md", lang } = Astro.props;
+const { text, lang } = Astro.props;
+// Accessible name starts with the visible "Listen" so voice-control users can say what they see.
 const label = lang?.startsWith("zh") ? `Listen in Chinese: ${text}` : `Listen: ${text}`;
 ---
-<button class:list={["iconbtn", { "iconbtn--lg": size === "lg" }]} type="button" data-speak={text} data-speak-lang={lang} aria-label={label}><Icon id="i-speak" /></button>
+<button class="btn-listen btn-listen--sm" type="button" data-speak={text} data-speak-lang={lang} aria-label={label}><Icon id="i-speak" /> Listen</button>
