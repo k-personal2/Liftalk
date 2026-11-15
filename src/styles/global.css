@@ -85,6 +85,13 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .h1__ja{display:block;margin-top:12px;font-family:var(--jp);font-weight:700;font-size:16px;line-height:1.4;letter-spacing:0;color:var(--ink-2)}
 .lede{margin:0 0 26px;font-family:var(--jp);font-weight:500;font-size:14px;line-height:1.6;color:var(--ink-3)}
 .lede strong{color:var(--ink);font-weight:700}
+/* First-view demo card: read the phrase, tap Listen, hear it. */
+.hero{display:flex;flex-direction:column;gap:6px;margin:0 0 30px;padding:22px;background:var(--paper);border:2px solid var(--line);border-radius:var(--r-xl);box-shadow:var(--shadow)}
+.hero__label{margin:0 0 4px;font-family:var(--jp);font-weight:700;font-size:13px;color:var(--orange)}
+.hero__en{margin:0;font-weight:900;font-size:clamp(26px,4vw,36px);line-height:1.12;letter-spacing:-.02em;text-wrap:balance}
+.hero__ja{margin:0;font-family:var(--jp);font-weight:700;font-size:16px;line-height:1.5;color:var(--ink-2)}
+.hero__listen{flex:none;margin-top:14px}
+.hero__more{align-self:center;margin-top:6px;padding:8px;font-family:var(--jp);font-weight:700;font-size:14px}
 .h2{margin:0;font-weight:900;font-size:20px;line-height:1;letter-spacing:-.01em}
 .explore{margin-top:52px}
 .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:48px 0 18px}
@@ -129,7 +136,7 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .card__link:hover,.row__link:hover{color:inherit}
 .card__link::after,.row__link::after{content:"";position:absolute;inset:0;border-radius:inherit}
 .card:has(.card__link:focus-visible),.row:has(.row__link:focus-visible){outline:3px solid var(--orange);outline-offset:2px}
-.card .favbtn,.card .iconbtn,.row .iconbtn{position:relative;z-index:1}
+.card .favbtn,.card .btn-listen,.row .btn-listen{position:relative;z-index:1}
 .card__top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .card__en{margin:0;font-weight:800;font-size:21px;line-height:1.22;letter-spacing:-.015em}
 .card__ja{margin:0;font-family:var(--jp);font-weight:500;font-size:14px;line-height:1.5;color:#4A443E}
@@ -141,12 +148,6 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .swatch{flex:none;width:10px;height:10px;border-radius:3px;border:1px solid var(--line)}
 .meta__level{font-weight:700;font-size:10.5px;line-height:1;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-5);white-space:nowrap}
 
-.iconbtn{
-  flex:none;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  border:2px solid var(--line);border-radius:11px;background:var(--yellow);width:44px;height:44px;
-}
-.iconbtn svg{width:20px;height:20px}
-.iconbtn--lg{width:46px;height:46px;border-radius:var(--r-sm)}
 .favbtn{
   flex:none;width:44px;height:44px;margin:-10px -8px 0 0;border:none;background:none;
   font-size:21px;line-height:1;cursor:pointer;color:#B6B0A8;
@@ -191,6 +192,7 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
   border:2px solid var(--line);border-radius:var(--r-lg);background:var(--orange);color:#fff;
   font-weight:900;font-size:17px;letter-spacing:.02em;cursor:pointer;box-shadow:var(--hard);white-space:nowrap;
 }
+.btn-primary svg{flex:none;width:22px;height:22px;stroke-width:2.3}
 .btn-primary:hover{background:var(--orange-dark)}
 .btn-primary:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 .btn-primary--dark{background:var(--ink);box-shadow:3px 3px 0 var(--orange)}
@@ -256,7 +258,11 @@ svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-lin
 .flash__rule{width:56px;height:3px;background:var(--yellow)}
 .flash__en{margin:0;font-weight:900;font-size:clamp(26px,5vw,40px);line-height:1.12;letter-spacing:-.025em;text-align:center;text-wrap:balance}
 .btn-listen{display:flex;align-items:center;gap:9px;padding:14px 22px;border:2px solid var(--line);border-radius:999px;background:var(--yellow);font-weight:800;font-size:14px;line-height:1;cursor:pointer;white-space:nowrap}
-.btn-listen svg{width:20px;height:20px}
+.btn-listen svg{flex:none;width:20px;height:20px}
+.btn-listen:hover{background:#F5C400}
+/* Compact pill for cards, rows and the Chinese panel; min-height keeps a 44px tap target. */
+.btn-listen--sm{flex:none;min-height:44px;padding:10px 14px;gap:6px;font-size:13px}
+.btn-listen--sm svg{width:18px;height:18px}
 .study-foot{margin-top:24px}
 
 /* ---------- toast ---------- */

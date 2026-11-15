@@ -3,11 +3,14 @@ import Layout from "../layouts/Layout.astro";
 import SearchBar from "../components/SearchBar.astro";
 import PhraseCard from "../components/PhraseCard.astro";
 import CategoryTile from "../components/CategoryTile.astro";
-import { CATEGORIES, QUICK_CHIPS } from "../data/phrases";
+import { CATEGORIES, PHRASES, QUICK_CHIPS } from "../data/phrases";
 import { GLOSSARY } from "../data/glossary";
 import Icon from "../components/Icon.astro";
-import { FEATURED, searchUrl } from "../lib/phrases";
+import { FEATURED, phraseUrl, searchUrl } from "../lib/phrases";
 import { websiteJsonLd } from "../lib/seo";
+
+// First-view demo: one lift-chat phrase the visitor can hear with a single tap (not in FEATURED, so no repeat below).
+const hero = PHRASES.find((p) => p.id === 16)!;
 ---
 <Layout jsonLd={[websiteJsonLd]}>
   <div class="eyebrow">
@@ -22,6 +25,13 @@ import { websiteJsonLd } from "../lib/seo";
     海外の友達とリフトに乗ったとき、<br />言いたいのに出てこない一言、あるよね。<br />
     <strong>だから、リフトークで知っておこう。</strong>
   </p>
+  <section class="hero" aria-label="フレーズを聴いてみる">
+    <p class="hero__label">たとえば、リフトでこう聞く</p>
+    <p class="hero__en" lang="en">{hero.en}</p>
+    <p class="hero__ja">{hero.ja}</p>
+    <button class="btn-primary hero__listen" type="button" data-speak={hero.en}><Icon id="i-speak" /> Listen</button>
+    <a class="hero__more" href={phraseUrl(hero)}>使い方を見る →</a>
+  </section>
   <SearchBar />
   <ul class="chips" aria-label="検索の例">
     {QUICK_CHIPS.map((c) => <li><a class="chip" href={searchUrl(c)}>{c}</a></li>)}
