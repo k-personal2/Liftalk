@@ -58,15 +58,21 @@ function speak(text: string, lang = "en-US") {
   const u = new SpeechSynthesisUtterance(text);
   u.lang = lang;
   u.rate = 0.9;
-  // No explicit u.voice: iOS lists voices that aren't downloaded, and picking one plays silence. lang alone gets the system default.
+  // iOS's default pick for a bare lang can be a novelty/Eloquence voice that plays silence on the web,
+  // so prefer Apple's standard voices (built-in "compact" first). Elsewhere none match and the system default is used.
+  const exact = matches.filter((x) => norm(x.lang) === norm(lang));
+  let voice =
+    exact.find((x) => x.voiceURI.startsWith("com.apple.voice.compact.")) ??
+    exact.find((x) => x.voiceURI.startsWith("com.apple.voice.")) ??
+    matches.find((x) => x.voiceURI.startsWith("com.apple.voice."));
   if (debugEl) {
     // ?debug&voice=<name or voiceURI>: force one voice to find which ones actually make sound on this device.
     const want = new URLSearchParams(location.search).get("voice");
-    const v = want ? voices.find((x) => x.name === want || x.voiceURI === want) : undefined;
-    if (v) u.voice = v;
-    log(`voice=${v ? v.voiceURI : want ? `"${want}" not found` : "(system default)"}`);
-    log(`${lang} voices: ${matches.filter((x) => norm(x.lang) === norm(lang)).map((x) => x.voiceURI).join(" | ")}`);
+    if (want) voice = voices.find((x) => x.name === want || x.voiceURI === want) ?? voice;
+    log(`voice=${voice ? voice.voiceURI : "(system default)"}${want ? ` (asked "${want}")` : ""}`);
+    log(`${lang} voices: ${exact.map((x) => x.voiceURI).join(" | ")}`);
   }
+  if (voice) u.voice = voice;
   utterance = u;
   u.onend = () => {
     log("onend");
