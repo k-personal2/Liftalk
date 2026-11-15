@@ -59,6 +59,14 @@ function speak(text: string, lang = "en-US") {
   u.lang = lang;
   u.rate = 0.9;
   // No explicit u.voice: iOS lists voices that aren't downloaded, and picking one plays silence. lang alone gets the system default.
+  if (debugEl) {
+    // ?debug&voice=<name or voiceURI>: force one voice to find which ones actually make sound on this device.
+    const want = new URLSearchParams(location.search).get("voice");
+    const v = want ? voices.find((x) => x.name === want || x.voiceURI === want) : undefined;
+    if (v) u.voice = v;
+    log(`voice=${v ? v.voiceURI : want ? `"${want}" not found` : "(system default)"}`);
+    log(`${lang} voices: ${matches.filter((x) => norm(x.lang) === norm(lang)).map((x) => x.voiceURI).join(" | ")}`);
+  }
   utterance = u;
   u.onend = () => {
     log("onend");
